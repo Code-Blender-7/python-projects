@@ -1,5 +1,8 @@
 import random
 
+__version__ = 3.9.6
+
+
 # 1. Generate Answer Value from Range of 1 to 10
 guess_no = random.randint(a=1, b=10)
 attempts = 0
