@@ -1,4 +1,4 @@
-This log is dedicated to the hash and its functions.
+4This log is dedicated to the hash and its functions.
 
 
 Hash is a fixed line code that is created from the original string. It is a syntax that is used everywhere. 
