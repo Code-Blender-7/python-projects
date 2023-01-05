@@ -1,6 +1,6 @@
 import random
 
-__version__ = 3.9.6
+__version__ = "3.9.6"
 
 
 # 1. Generate Answer Value from Range of 1 to 10
@@ -13,11 +13,11 @@ while True:
 
     if choice <= 10:
         if choice == guess_no:
-            attempts += 1 
-            print(f'Machine got it correct at attempt {attempts}')
+            attempts += 1
+            print(f'Attempt#{attempts} successful. Choice = {choice}, Guess = {guess_no}')
             break
         else:
             # 3. failure Attempt count
             attempts += 1 
-            print(f'Attempt#{attempts} failed')
+            print(f'Attempt#{attempts} failed. Choice = {choice}, Guess = {guess_no}')
             continue
