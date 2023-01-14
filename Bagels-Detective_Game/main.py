@@ -70,7 +70,7 @@ def continueGame():
     """
     global running, answer, attempts
     
-    choiceContinue = input("Do you want to continue? (y/n)")
+    choiceContinue = input("Do you want to continue? (y/n): ")
     if choiceContinue == "y":
         attempts = 1
         print("new game!")
@@ -104,7 +104,7 @@ while running: # main loop
 
     elif attempts == attempts_Limit and user_input != answer:
         print("Attempts Reached! Game over")
-        print(f"Correct answer was {answer}")
+        print(f"Correct answer was {answer}\n")
         continueGame()
     
     elif user_input == answer:

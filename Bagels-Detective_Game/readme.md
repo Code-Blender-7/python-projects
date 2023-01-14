@@ -1,4 +1,6 @@
 
+![](https://github.com/Code-Blender-7/assets/blob/main/python-projects/bagels-detective_game/bagels.gif)
+
 
 # Introduction
 
