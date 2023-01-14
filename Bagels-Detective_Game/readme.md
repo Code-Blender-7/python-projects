@@ -5,6 +5,14 @@
 The Bagels is a command-line based detective logic game created using Python.
 The Idea comes from Ai Stewgart of the book author "Big Book Small Python Projects"
 
+### Requirements for Runtime
+
+Bagels is a python written code. That means you need to install the python language in your machine. 
+After _verifying_ the python is installed, just type this on the directory command line~
+```
+python main.py
+```
+
 ### How does it work?
 _Note that the behavior is sightly different from this one. That includes being unpolished but no cares?_
 
@@ -41,6 +49,10 @@ Thanks for playing!
 ```
 
 The code that I written is completely my own. For Ai Stewgart's solution of this project, you can check it out on the page 31-32 of the book [_Small Book, Small Python Projects_](https://inventwithpython.com/bigbookpython/)
+
+### Additional Notes 📝
+This code is only coded for supporting a 3-length answer/question. You can expand it by modifying the code. The main features are also encapsulated so that you can add in new features with ease!
+
 
 ### Credits
 

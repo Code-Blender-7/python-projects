@@ -6,7 +6,7 @@ import random
 
 
 running = True
-attempts_Limit = 3
+attempts_Limit = 10
 attempts = 1
 
 def generateAnswer():
@@ -20,8 +20,23 @@ def generateAnswer():
 
 
 
-answer = generateAnswer()
-print(answer)
+def bagels_intro():
+    print("""
+          
+Welcome to the Bagels detective logic game!
+Code by Ahnaf Tahmid Jaheen (FoxtBird)
+Original idea by Al Sweigart al@inventwithpython.com
+
+Here are some clues:
+When I say: That means:
+
+    Pico One digit is correct but in the wrong position.
+    Fermi One digit is correct and in the right position.
+    Bagels No digit is correct.
+    
+I have thought up a number.
+You have 10 guesses to get it.
+          """)
 
 
 def checkValExist(user_List, answer_list):
@@ -70,24 +85,33 @@ def continueGame():
         running = False
 
 
-while running:
 
-    print(f"Attempt #{attempts}")
+answer = generateAnswer()
+
+bagels_intro()
+while running: # main loop
+    print(f"\nAttempt #{attempts}")
     user_input = input("> ")
 
     
-    if len(list(user_input)) != 3:
+    if len(str(user_input)) != 3:
         print("The Digits must be 3 characters")
+        continue
+    
+    elif not user_input.isdigit():
+        print("Strings are not allowed. Try again!")
         continue
 
     elif attempts == attempts_Limit and user_input != answer:
         print("Attempts Reached! Game over")
-        break
+        print(f"Correct answer was {answer}")
+        continueGame()
+    
     elif user_input == answer:
         print("You got it!")
         continueGame()
 
     else:
-        NotFoundNumbers = checkValExist(list(user_input), list(answer))
+        NotFoundNumbers = checkValExist(user_input, answer)
         if NotFoundNumbers == 3: print("bagels")
         attempts += 1
