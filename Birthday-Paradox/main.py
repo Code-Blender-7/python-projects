@@ -5,13 +5,17 @@
 from datetime import datetime, timedelta
 import random
 
-searchLimits = 0
-birthdatesMatched = 0
-scanTrials = 100000
+searchLimits = 0 # Number of dates in a list
+
+scanTrials = 100000 # Number of simulations to be ran
 
 
 ## 1. Get how many birthdays to generate. Maximun range is 100
 def getRange():
+    """
+    Get the range of list to be generated.
+    Updates searchLimits to mutate the values
+    """
     global searchLimits
     while True:
         try:
@@ -24,6 +28,15 @@ def getRange():
 
 ## 2. Generate Random Dates
 def generateBirthday(totalDates):
+    """
+    Function to generate birthdays
+
+    Args:
+        totalDates (int / str): Get the number of dates to be generated in a single list 
+
+    Returns:
+        list : list of birthday dates.
+    """
     date_list = []
 
     for date_index in range(totalDates):
@@ -34,34 +47,53 @@ def generateBirthday(totalDates):
     
 
 # 3. Match birthdays that are the same
-def getMatchingBirthdays(birthdatesList):
-    global birthdatesMatched
+def matchingBirthdaysCount(birthdatesList):
+    """
+    Returns the matched dates count in the list
+    Takes a list of dates to see if there is any occurances
+
+    Args:
+        birthdatesList (list): Birthday dates (month, day)
+
+    Returns:
+        int/str : Number of matches of each dates ones. No Duplicates
+    """
+    matches = []
     for i in range(len(birthdatesList)):
-        if birthdatesList.count(birthdatesList[i]) > 1: 
-            birthdatesMatched += 1
-            return True
-        
+        if birthdatesList.count(birthdatesList[i]) > 1:
+            if birthdatesList[i] not in matches:
+                matches.append(birthdatesList[i])
+    
+    return matches
+
+
 def main():
-    simulationMatched = 0
+    simulationMatched = 0 # count of the simulation of the atttempts scenarios that had a match in them
+    birthdatesMatched = 0 # Number of birthdays matched in a list
+    
     print("""
 Birthday Paradox. A program to figure out the same birthday probability between two people.
-Original Project Idea by Al Sweigart al@inventwithpython.com
+Original Idea: Al Sweigart al@inventwithpython.com
 Code Author: Ahnaf Tahmid Jaheen (Foxtbird)
     """)
+    
     getRange()
     print(f"Here are {searchLimits} birthdays:  \n")
+    
     storedList = generateBirthday(searchLimits)
     print(", ".join(storedList))
-    getMatchingBirthdays(storedList)
-    if birthdatesMatched > 0: print(f"\nHere {birthdatesMatched} people have their birthdays matched\n")
-    elif birthdatesMatched == 0: print("\nHere, there is no people who have same birthdays. Possibly due to low people dates.\n")
+    print(f"\nThere were {len(matchingBirthdaysCount(storedList))} dates that were the same")
     
-    print(f"Matching the birthdays of {searchLimits} over {scanTrials} times")
+    print(f"\nMatching the birthdays of {searchLimits} over {scanTrials} times")
     if searchLimits > 80: print("Note that this may take a while") 
     
+    # 4. Run the simulation over the specified times
     input("Enter anything to start the matching sequence: \n")
     for i in range(scanTrials):
-        if getMatchingBirthdays(generateBirthday(searchLimits)) == True: simulationMatched += 1
+        currentScenario = matchingBirthdaysCount(generateBirthday(searchLimits))
+        if len(currentScenario) > 0: # if there is a match
+            simulationMatched += 1
+            birthdatesMatched += len(currentScenario)
         if i % 10000 == 0 and i != 0: print(f"Passing {i} scenario attempts. Matched: {birthdatesMatched}")
         
     print(f"""
