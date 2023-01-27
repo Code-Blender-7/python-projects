@@ -5,25 +5,22 @@
 from datetime import datetime, timedelta
 import random
 
-searchLimits = 0 # Number of dates in a list
-
-scanTrials = 100000 # Number of simulations to be ran
-
-
 ## 1. Get how many birthdays to generate. Maximun range is 100
 def getRange():
     """
     Get the range of list to be generated.
     Updates searchLimits to mutate the values
+    Returns:
+        inputAmount = Number of dates per list
     """
-    global searchLimits
+
     while True:
         try:
             inputAmount = int(input("How many birthdays should be generate? (max 100): "))
             if inputAmount > 100: print("Value out of range! (max 100)\nIf above 100 is given, it will take a long time for the calculation to be completed!\n")
             else: break
         except ValueError: print("Input is incorrect. Try again") 
-    searchLimits = inputAmount
+    return inputAmount
 
 
 ## 2. Generate Random Dates
@@ -68,24 +65,21 @@ def matchingBirthdaysCount(birthdatesList):
 
 
 def main():
+    searchLimits = getRange() # Number of dates in a list
+    scanTrials = 100000 # Number of simulations to be ran
     simulationMatched = 0 # count of the simulation of the atttempts scenarios that had a match in them
     birthdatesMatched = 0 # Number of birthdays matched in a list
     
-    print("""
-Birthday Paradox. A program to figure out the same birthday probability between two people.
-Original Idea: Al Sweigart al@inventwithpython.com
-Code Author: Ahnaf Tahmid Jaheen (Foxtbird)
-    """)
-    
-    getRange()
     print(f"Here are {searchLimits} birthdays:  \n")
     
+    # EXTRA. Add Details of the upcoming simulation
     storedList = generateBirthday(searchLimits)
     print(", ".join(storedList))
     print(f"\nThere were {len(matchingBirthdaysCount(storedList))} dates that were the same")
     
     print(f"\nMatching the birthdays of {searchLimits} over {scanTrials} times")
     if searchLimits > 80: print("Note that this may take a while") 
+    
     
     # 4. Run the simulation over the specified times
     input("Enter anything to start the matching sequence: \n")
@@ -102,6 +96,11 @@ It means that out of {searchLimits} peoples, there is a {round(simulationMatched
 It could be more than you think!
 """)
 
-
+## INTRO
+print("""
+Birthday Paradox. A program to figure out the same birthday probability between two people.
+Original Idea: Al Sweigart al@inventwithpython.com
+Code Author: Ahnaf Tahmid Jaheen (Foxtbird)
+    """)
+    
 main()
-
