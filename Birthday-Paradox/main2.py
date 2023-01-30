@@ -68,7 +68,7 @@ def matchingBirthdaysCount(birthdatesList):
     return matches
 
 
-def main(searchLimits, simulationRuns=100000):
+def main(searchLimits, simulationRuns):
     
     simulationMatched = 0 # count of the simulation of the atttempts scenarios that had a match in them
     birthdatesMatched = 0 # Number of birthdays matched in a list
@@ -96,7 +96,7 @@ def main(searchLimits, simulationRuns=100000):
         
     print(f"""
 Out of {simulationRuns} times generating over {simulationRuns*searchLimits} random dates , {birthdatesMatched} birthday dates are the same.
-It means that out of {searchLimits} peoples, there is a {round(simulationMatched / simulationRuns * 100, 2)}% probability they have the same birthday.
+It means that out of {searchLimits} peoples, there is a {round(simulationMatched / simulationRuns * 100, 2)}% probability some may have the same birthday.
 It could be more than you think!
 """)
  
@@ -111,10 +111,12 @@ Code Author: Ahnaf Tahmid Jaheen (Foxtbird)
 """, 
 formatter_class=RawDescriptionHelpFormatter) # Check docs of argparse. 
 
-parser.add_argument("-d", help="Number of dates in a single simulation [required]", type=int, metavar="int")
-parser.add_argument("-s", "--simulations", help="Total simulations to be run over", action="store_true")
+parser.add_argument("--dates", help="Number of dates in a single simulation [required]", type=int, metavar="int")
+parser.add_argument("--simulations", help="Total simulations to be run over [default 100,000]", default=100000, metavar="int", type=int)
 
 args = parser.parse_args()
 
-if args.d: print(args.d)
+if args.dates:
+    if args.dates < 100: main(args.dates, args.simulations)
+    else: print("Date Value cannot be above 100")
 else: parser.print_help()
