@@ -7,6 +7,7 @@ from time import sleep
 import random
 import argparse
 from argparse import RawTextHelpFormatter
+import json
 
 
 ## 1. Generate Random Dates
@@ -21,7 +22,6 @@ def generateBirthday(totalDates):
         list : list of birthday dates.
     """
     date_list = []
-
     for date_index in range(totalDates):
         x = datetime.now() + timedelta(days=random.randint(0,365))
         date_list.append(x.strftime("%b %d"))
@@ -57,24 +57,23 @@ def main(searchLimits, simulationRuns):
     Args:
         searchLimits (int): Numbers of dates in a single list
         simulationRuns (int): Number of simulations to be ran
-    """    
-    
+    """
     
     simulationMatched = 0 # count of the simulation of the atttempts scenarios that had a match in them
     birthdatesMatched = 0 # Number of birthdays matched in a list
     
-    print(f"Here are {searchLimits} birthdays:  \n")
+    print(f"\nHere are {searchLimits} birthdays:")
     
     # EXTRA. Add Details of the upcoming simulation
     storedList = generateBirthday(searchLimits)
-    print(", ".join(storedList))
-    print(f"\nThere were {len(matchingBirthdaysCount(storedList))} dates that were the same")
+    print(json.dumps(storedList, indent=2)) ## prints JSON dumps as a fancy way to print the dates
+    print(f"\nIn this simulation list, Total matched birthdays are : {len(matchingBirthdaysCount(storedList))}")
     
     # 3. Run the simulation over the specified times
     print(f"\nMatching the birthdays of {searchLimits} over {simulationRuns} times")
     if searchLimits > 80: print("Note that this may take a while") 
-    print(f"Notice. Starting the simulations over {simulationRuns} times in 3 seconds. Ctrl+C to Abort if you wish.\n")
-    sleep(3)
+    print(f"Notice. Starting the simulations over {simulationRuns} times in 5 seconds. Ctrl+C to Abort if you wish.\n")
+    sleep(5)
     print("Started...\n")
     for i in range(simulationRuns):
         currentScenario = matchingBirthdaysCount(generateBirthday(searchLimits))
@@ -104,6 +103,8 @@ parser.add_argument("--simulations", help="Total simulations to be run over [def
 args = parser.parse_args()
 
 if args.dates:
-    if args.dates < 100: main(args.dates, args.simulations)
+    if args.dates < 100: 
+        try: main(args.dates, args.simulations)
+        except KeyboardInterrupt: print("\nAborted")
     elif args.dates > 100: print("Date Value cannot be above 100")
 else: parser.print_help()
